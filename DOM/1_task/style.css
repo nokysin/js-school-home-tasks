@@ -1,0 +1,21 @@
+.root {
+    width: 50%;
+}
+
+.folder {
+    margin-left: 20px;
+    background-color: #b1c9ef;
+}
+
+.file {
+    margin-left: 20px;
+    background-color: #dce6f7;
+}
+
+.folder::before {
+	content: '• ';
+}
+
+.file::before {
+    content: '▲ ';
+}
