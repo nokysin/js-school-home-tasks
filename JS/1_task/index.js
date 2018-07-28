@@ -12,12 +12,12 @@ const inquirer = {
 
         inquirer.confirmData();
     },
-    ask: property =>  {
-        if (typeof this.data[property] === 'undefined') {
+    ask: property => {
+        if (typeof inquirer.data[property] === 'undefined') {
             return false;
         }
 
-        this.data[property] = prompt(`Please say your ${property}`);
+        inquirer.data[property] = prompt(`Please say your ${property}`);
     },
     confirmData: () => {
 
@@ -34,6 +34,11 @@ const inquirer = {
         let dataString = '\n';
 
         for (let item in inquirer.data) {
+
+            if (typeof inquirer.data[item] === 'undefined') {
+                continue;
+            }
+
             dataString += `\n ${item}: ${inquirer.data[item]} `;
         }
 
