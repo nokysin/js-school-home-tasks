@@ -3,12 +3,12 @@ const inquirer = {
     data: {
         name: '',
         age: '',
-        position: ''
+        city: ''
     },
     run: () => {
         inquirer.ask('name');
         inquirer.ask('age');
-        inquirer.ask('position');
+        inquirer.ask('city');
 
         inquirer.confirmData();
     },
