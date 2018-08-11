@@ -1,28 +1,14 @@
 
-
-
-
-
 isValidRow = (rowData) => {
 
     const value = rowData[3];
 
-    if(!isNaN(Number(value))) {
+    if (!isNaN(Number(value))) {
         return true;
     }
 
     return false;
 }
-
-validateRows = (data) => {
-    return data.filter(isValidRow);
-}
-
-const file = readFile().split('\n');
-const rowsPrepared = validateRows(file.map(row => {
-    return row.split(',').map(item => { return item.trim(); });
-}));
-
 
 composeObject = (data) => {
 
@@ -44,10 +30,74 @@ composeObject = (data) => {
     return result;
 }
 
+totalSum = (data, row) => {
+    return data.reduce(
+        (sum, item) => { return sum + Number(item[row]) },
+        0
+    ).toFixed(2);
+}
+
+groupByRow = (data, row) => {
+
+    let object = {};
+
+    data.forEach(item => {
+        const key = item[row];
+
+        if (Object.keys(object).indexOf(key) == -1) {
+            object[key] = [];
+        }
+        object[key].push(item);
+    });
+
+    return object;
+}
+
+averageByType = (data, type) => {
+
+    const count = data.length;
+    const totalSumByType = totalSum(data, type);
+
+    return (totalSumByType / count).toFixed(2);
+}
+
+averageObject = (data, key) => {
+
+    let object = [];
+
+    for (let index in data) {
+        object.push({
+            [key]: index,
+            average: averageByType(data[index], 'amount')
+        });
+    }
+
+    return object;
+}
 
 
 
-console.log(composeObject(rowsPrepared));
+
+const file = readFile().split('\n');
+
+const rowsPrepared = composeObject(
+    file.map(row => {
+        return row.split(',').map(
+            item => {
+                return item.trim();
+            });
+    })
+        .filter(isValidRow)
+);
+
+// calculation
+const total = totalSum(rowsPrepared, 'amount');
+const averageByMonth = averageObject(groupByRow(rowsPrepared, 'month'), 'month');
+const averageByDepartment = averageObject(groupByRow(rowsPrepared, 'department'), 'department');
+
+
+render.init();
+render.render.renderAllItems(total, averageByMonth, averageByDepartment);
 
 
 // общую сумму по ведомости;
@@ -66,7 +116,7 @@ console.log(composeObject(rowsPrepared));
 
 function readFile() {
     return (
-  `MONTH,DEPARTMENT,EMPLOYEE,AMOUNT
+        `MONTH,DEPARTMENT,EMPLOYEE,AMOUNT
   2018-01,Legals,Smith A.,14289.66
   2018-01,Legals,Jonson B.,7408.05
   2018-01,Legals,Lee C.,10102.98
@@ -163,4 +213,4 @@ function readFile() {
   2018-03,Service,Green F.,6972.30
   2018-03,Service,Driller R.,10481.02
   `);
-  }
+}
