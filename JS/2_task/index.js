@@ -95,16 +95,9 @@ const total = totalSum(rowsPrepared, 'amount');
 const averageByMonth = averageObject(groupByRow(rowsPrepared, 'month'), 'month');
 const averageByDepartment = averageObject(groupByRow(rowsPrepared, 'department'), 'department');
 
-
+// rendering
 render.init();
 render.render.renderAllItems(total, averageByMonth, averageByDepartment);
-
-
-// общую сумму по ведомости;
-// среднюю выплату ЗП по каждому департаменту;
-// среднюю выплату ЗП за каждый месяц.
-
-
 
 
 
