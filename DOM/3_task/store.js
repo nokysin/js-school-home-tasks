@@ -9,7 +9,7 @@ class Store {
     });
 
 
-    this._handlers = [];
+    this._handlers = {};
   }
 
   _addInnerRecord(data) {
@@ -52,12 +52,20 @@ class Store {
     return 'my_id_' + this._id++;
   }
 
-  subscribe(callback) {
-    this._handlers.push(callback);
+  subscribe(eventName, callback) {
+    this._handlers[eventName] = callback;
+  }
+
+  unsubscribe(eventName) {
+    if(this._handlers[eventName]) {
+      delete this._handlers[eventName];
+    }
   }
 
   notifyListeners() {
-    this._handlers.forEach((cb) => cb());
+    for(let eventName in this._handlers) {
+      this._handlers[eventName]();
+    }
   }
 
 }

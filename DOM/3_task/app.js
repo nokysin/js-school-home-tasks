@@ -10,7 +10,7 @@ class App {
 
     this._store = new Store(initData);
 
-    this._store.subscribe(this._handleChangeData.bind(this));
+    this._store.subscribe('updateStore', this._handleChangeData.bind(this));
     this._store.notifyListeners();
 
     this._bindEventListeners();
@@ -115,6 +115,8 @@ class App {
     else {
       this._store.updateRecord(row);
     }
+
+    this._resetForm();
     
   }
 
