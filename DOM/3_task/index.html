@@ -15,7 +15,7 @@
 
   <div class="row">
     <form name="myEditForm">
-      <input type="hidden" name="__innerID" id="__innerID" value="-1">
+      <input type="hidden" name="__innerID" id="__innerID" value="">
 
       <div class="form-group">
         <label for="first">First</label>
@@ -33,7 +33,8 @@
       </div>
 
 
-      <button type="button" class="btn btn-primary">Submit</button>
+      <button id="submit" type="button" class="btn btn-primary">Submit</button>
+      <button id="reset" type="button" class="btn btn-danger float-right">Reset</button>
     </form>
   </div>
 
@@ -58,7 +59,7 @@
 </div>
 
 <script>
-  const app = new App(INITIAL_DATA, 'ourDataView', 'myEditForm');
+  const app = new App(INITIAL_DATA, 'ourDataView', 'myEditForm', document.getElementById('submit'), document.getElementById('reset'));
   app.run();
 </script>
 </body>

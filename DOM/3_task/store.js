@@ -23,8 +23,22 @@ class Store {
     this.notifyListeners();
   }
 
+  updateRecord(data) {
+    const __innerID = data.__innerID;
+    const keys = Object.keys(data);
+
+    if (typeof this._state[__innerID] !== 'undefined') {
+
+      keys.forEach(key => {
+        this._state[__innerID][key] = data[key];
+      });
+
+      this.notifyListeners();
+    }
+  }
+
   getRecordById(recordId) {
-    return { ...this._state[recordId], __innerID: recordId};
+    return { ...this._state[recordId], __innerID: recordId };
   }
 
   getRecords() {
