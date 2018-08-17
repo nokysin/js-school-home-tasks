@@ -2,9 +2,11 @@ const finder = {
 
     rootElement: null,
     firstFolderElements: null,
+    openButton: null,
     subFolderSelector: '.folder-content',
     selectedItems: [],
     selectedBackgroundColor: "#4c90ff",
+    classHide: 'd-none',
 
     run: () => {
 
@@ -23,30 +25,34 @@ const finder = {
     },
 
     bindEventsOpenSubFolder: () => {
+
         finder.firstFolderElements.forEach(item => {
             item.addEventListener('click', (event) => {
-            
+                const target = event.target;
 
                 // select one or few folders
                 if (false === event.shiftKey) {
                     finder.removeBackgroundToSelectedItemsAll();
                 }
-                finder.addBackgroundToSelectedItem(event.target);
+                finder.addBackgroundToSelectedItem(target);
+            });
+        });
 
-                const subFolder = event.target.querySelector(finder.subFolderSelector);
+        finder.openButton.forEach(item => {
+
+            item.addEventListener('click', (event) => {
+
+                const target = event.target;
+                const folder = item.nextElementSibling;
+                const subFolder = folder.querySelector(finder.subFolderSelector);
 
                 // open or close subfolder
                 if (null !== subFolder) {
-
-                    switch (subFolder.style.display) {
-                        case 'none':
-                            subFolder.style.display = '';
-                            break;
-                        case '':
-                            subFolder.style.display = 'none';
-                            break
-                    }
+                    finder.removeBackgroundToSelectedItemsAll();
+                    finder.toggleDisplayNone(subFolder);
+                    finder.toggleOpenButton(target);
                 }
+
             });
         });
     },
@@ -56,6 +62,7 @@ const finder = {
         let array = [];
 
         finder.firstFolderElements.forEach(item => {
+
             const searchingElement = item.querySelector(finder.subFolderSelector);
             if (null !== searchingElement) {
                 array.push(item);
@@ -66,7 +73,6 @@ const finder = {
     },
 
     closeSubFolder: () => {
-
         finder.searchFolderWithSubFolder().forEach(item => {
             const subFolder = item.querySelector(finder.subFolderSelector);
             finder.addDisplayNone(subFolder);
@@ -82,15 +88,25 @@ const finder = {
 
     loadElements: () => {
         finder.rootElement = document.querySelector('.root');
-        finder.firstFolderElements = document.querySelectorAll('.root > .folder');
+        finder.firstFolderElements = document.querySelectorAll('.root  .folder');
+        finder.openButton = document.querySelectorAll('.root .open-button');
     },
 
     removeDisplayNone: (element) => {
-        element.style.display = "";
+        element.classList.remove(finder.classHide);
     },
 
     addDisplayNone: (element) => {
-        element.style.display = "none";
+        element.classList.add(finder.classHide);
+    },
+
+    toggleDisplayNone: (element) => {
+        (element.className.indexOf(finder.classHide) >= 0) ? finder.removeDisplayNone(element) : finder.addDisplayNone(element);
+    },
+
+    toggleOpenButton: (element) => {
+        const label = element.textContent === '+' ? '-' : '+';
+        element.textContent = label;
     },
 
     addBackgroundToSelectedItem: (element) => {
