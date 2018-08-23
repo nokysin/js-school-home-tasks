@@ -1,6 +1,6 @@
 
 
-const render = {
+export const render = {
 
     init: () => {
 
