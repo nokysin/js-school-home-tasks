@@ -1,16 +1,14 @@
 import React from 'react';
+import MainImage from './MainImage';
+import MainInfo from './MainInfo';
+import Statistics from './Statistics';
 
-const Statistics = props => (
-    <div className="row">
-        <div className="col-4">
-            
-            <h2><b>Statistics:</b></h2>
-            <h5>Repositories: {props.repositories}</h5>
-            <h5>Following: {props.following}</h5>
-            <h5>Followers: {props.followers}</h5>
-        </div>
-        <div className="col-8"></div>
+const Profile = props => (
+    <div>
+        <MainImage {...props} />
+        <MainInfo {...props} />
+        <Statistics {...props} />
     </div>
 );
 
-export default Statistics;
+export default Profile;

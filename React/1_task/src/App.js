@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
-import MainImage from './MainImage';
-import MainInfo from './MainInfo';
-import Statistics from './Statistics';
+import Profile from './Profile';
 import Data from './data/user';
 
 
@@ -15,35 +13,18 @@ const Adapter = (data) => {
     repositories: data.public_repos,
     following: data.following,
     followers: data.followers
-    // username: data.login,
-    // username: data.login,
-    // username: data.login,
   }
 }
 
 const data = Adapter(Data);
 
-console.log(data);
+console.log('data ', data);
 
 class App extends Component {
   render() {
     return (
       <div className="container">
-          <MainImage 
-            thumbnail    = {data.thumbnail}
-            thumbnailAlt = {data.username}
-          />
-          <MainInfo
-            name     = {data.name}
-            username = {data.username}
-            company  = {data.company}
-            location = {data.location}
-          />
-          <Statistics
-            repositories = {data.repositories}
-            following = {data.following}
-            followers = {data.followers}
-          />
+        <Profile {...data} />
       </div>
     );
   }
