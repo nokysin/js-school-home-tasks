@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import Profile from './Profile';
 import Data from './data/user';
 
-
 const Adapter = (data) => {
   return {
     thumbnail: data.avatar_url,
@@ -17,8 +16,6 @@ const Adapter = (data) => {
 }
 
 const data = Adapter(Data);
-
-console.log('data ', data);
 
 class App extends Component {
   render() {
